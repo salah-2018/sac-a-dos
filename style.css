@@ -854,3 +854,31 @@ body{
   }
 
 }
+
+
+/* Performance: reserve image space to reduce CLS */
+.product-card-image,
+.slider-slide img,
+.description img {
+  aspect-ratio: 1 / 1;
+}
+
+.slider-container {
+  contain: layout paint;
+}
+
+.slider-slide {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.slider-slide img {
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .slider-slide {
+    aspect-ratio: 1 / 1;
+  }
+}
