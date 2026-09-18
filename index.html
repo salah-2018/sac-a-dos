@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>متجرنا</title>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2210183416599963');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height='1' src='https://www.facebook.com/tr?id=2210183416599963&amp;ev=PageView&amp;noscript=1' style='display:none' width='1'/></noscript>
+  <!-- End Meta Pixel Code -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id='shop'>
+
+    <div class='store-topbar'>
+     📞 للطلب والاستفسار: 0661807080 &#8212; خدمة الزبائن 24/7
+    </div>
+
+    <div class='store-header'>
+      <div class='store-nav'>
+        <span onclick='showHome()'>&#9776;</span>
+        <span onclick='showHome()'>التصنيفات</span>
+      </div>
+
+      <div class='store-logo' onclick='showHome()' style='cursor:pointer;'>🛍</div>
+
+      <div></div>
+    </div>
+
+    <h1 class='shop-title'>متجرنا</h1>
+
+    <p id='status'>جاري تحميل المنتجات...</p>
+
+    <!-- PRODUCTS LIST -->
+    <div class='products' id='products'></div>
+
+    <!-- PRODUCT DETAIL -->
+    <div id='detail'>
+
+      <!-- MOBILE TITLE (SHOWS ABOVE SLIDER ONLY ON PHONES) -->
+      <div class='mobile-title-section'>
+        <h2 class='detail-title' id='mobileDetailTitle'></h2>
+        <div class='detail-price' id='mobileDetailPrice'></div>
+      </div>
+
+      <div class='detail-box'>
+
+        <div class='detail-grid'>
+
+          <!-- RIGHT : PRODUCT SLIDER GALLERY -->
+          <div class='slider-container' id='sliderContainer'>
+            <div class='slider-wrapper' id='sliderWrapper'></div>
+            <button class='slider-btn prev-btn' onclick='prevSlide()' type='button'>&#10095;</button>
+            <button class='slider-btn next-btn' onclick='nextSlide()' type='button'>&#10094;</button>
+            <div class='slider-dots' id='sliderDots'></div>
+          </div>
+
+          <!-- LEFT : ORDER FORM & DESCRIPTION -->
+          <div class='sticky-info-column'>
+
+            <!-- DESKTOP TITLE (SHOWS ON COMPUTERS) -->
+            <div class='desktop-title-section'>
+              <h2 class='detail-title' id='detailTitle'></h2>
+              <div class='detail-price' id='detailPrice'></div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class='description-area'>
+              <div class='description-heading'>&#10024; وصف وتفاصيل المنتج</div>
+              <div class='description' id='detailDescription'></div>
+            </div>
+
+            <!-- ORDER FORM BOX -->
+            <div class='order-box' id='orderBox'>
+
+              <!-- شريط معلومات المنتج المصغر -->
+              <div class='mini-product-bar'>
+                <div class='mini-product-info'>
+                  <img alt='' class='mini-product-img' id='miniProductImg' src=''></img>
+                  <span class='mini-product-title' id='miniProductTitle'>-</span>
+                </div>
+                <div class='mini-product-pricing'>
+                  <span class='qty-badge' id='miniQtyBadge'>محفظة واحدة</span>
+                  <span class='mini-price' id='miniTotalPrice'>0 دج</span>
+                </div>
+              </div>
+
+              <!-- خيارات العروض / المحافظ -->
+              <div class='bundles-wrapper'>
+                <div class='bundles-title'>اختر العرض المناسب:</div>
+
+                <label class='bundle-option active' onclick='selectBundle(1, this)'>
+                  <div class='bundle-info'>
+                    <input checked='checked' name='bundle_option' type='radio' value='1'></input>
+                    <span class='bundle-text'>محفظة واحدة</span>
+                  </div>
+                  <span class='bundle-price-tag' id='bundlePrice1'>0 دج</span>
+                </label>
+
+                <label class='bundle-option' onclick='selectBundle(2, this)'>
+                  <div class='bundle-info'>
+                    <input name='bundle_option' type='radio' value='2'></input>
+                    <span class='bundle-text'>محفظتان (2)</span>
+                    <span class='bundle-badge'>توفير خاص</span>
+                  </div>
+                  <span class='bundle-price-tag' id='bundlePrice2'>0 دج</span>
+                </label>
+
+                <label class='bundle-option' onclick='selectBundle(3, this)'>
+                  <div class='bundle-info'>
+                    <input name='bundle_option' type='radio' value='3'></input>
+                    <span class='bundle-text'>ثلاث محافظ (3)</span>
+                    <span class='bundle-badge'>الأكثر مبيعا&#1611; 🔥</span>
+                  </div>
+                  <span class='bundle-price-tag' id='bundlePrice3'>0 دج</span>
+                </label>
+              </div>
+
+              <!-- حقل الاسم الكامل -->
+              <div class='input-group'>
+                <span class='input-icon'>👤</span>
+                <input id='customerName' placeholder='الاسم الكامل' type='text'></input>
+              </div>
+
+              <!-- حقل رقم الهاتف -->
+              <div class='input-group'>
+                <span class='input-icon'>📞</span>
+                <input id='customerPhone' placeholder='رقم الهاتف' type='tel'></input>
+              </div>
+
+              <div class='order-row'>
+                <!-- حقل الولاية -->
+                <div class='input-group'>
+                  <span class='input-icon'>📍</span>
+                  <select id='wilaya'>
+                    <option value=''>اختر الولاية</option>
+                  </select>
+                </div>
+
+                <!-- حقل البلدية -->
+                <div class='input-group'>
+                  <span class='input-icon'>🏠</span>
+                  <select disabled='disabled' id='commune'>
+                    <option value=''>اختر البلدية</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class='summary'>
+                <div class='summary-line'>
+                  <span>عرض المنتج (<span id='qtyCount'>محفظة واحدة</span>)</span>
+                  <strong id='productPrice'>0 دج</strong>
+                </div>
+
+                <div class='summary-line'>
+                  <span>مصاريف التوصيل</span>
+                  <strong id='deliveryPrice'>0 دج</strong>
+                </div>
+
+                <div class='summary-line summary-total'>
+                  <span>المجموع الكلي</span>
+                  <strong id='orderTotal'>0 دج</strong>
+                </div>
+              </div>
+
+              <!-- زر تأكيد الطلب -->
+              <div class='order-button-wrapper'>
+                <button class='order-button' id='sendOrder' onclick='submitOrder()' type='button'>
+                  <span class='btn-price-sticker' id='btnPriceBadge'>0 دج</span>
+                  <span>اشتري الآن</span>
+                </button>
+              </div>
+
+              <div id='orderMessage'></div>
+
+            </div>
+
+            <!-- FEATURES -->
+            <div class='store-features'>
+              <div class='store-feature'>
+                <div class='feature-icon'>🛡</div>
+                <div class='feature-title'>ضمان الجودة</div>
+                <div class='feature-text'>استبدال مجاني في حالة العيوب</div>
+              </div>
+
+              <div class='store-feature'>
+                <div class='feature-icon'>🚚</div>
+                <div class='feature-title'>توصيل سريع</div>
+                <div class='feature-text'>الدفع عند الاستلام</div>
+              </div>
+
+              <div class='store-feature'>
+                <div class='feature-icon'>🏅</div>
+                <div class='feature-title'>منتج أصلي</div>
+                <div class='feature-text'>جودة ممتازة مضمونة</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- الزر الثابت التفاعلي للموبايل -->
+        <div class='mobile-sticky-order'>
+          <button class='sticky-btn' onclick='scrollToOrder()' type='button'>
+            <span>🛒 اضغط هنا للطلب الآن</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- THANK YOU PAGE SECTION -->
+    <div id='thankYouPage'>
+      <div class='thank-you-icon'>&#10003;</div>
+      <h2 class='thank-you-title'>شكرا&#1611; لك! تم استلام طلبك بنجاح</h2>
+      <p class='thank-you-text'>سيتصل بك فريقنا قريبا&#1611; على رقم هاتفك لتأكيد الطلب وشحنه إليك.</p>
+      
+      <div class='order-details-card'>
+        <h4>تفاصيل الطلب:</h4>
+        <p><strong>المنتج:</strong> <span id='tyProduct'>-</span></p>
+        <p><strong>المبلغ الإجمالي:</strong> <span id='tyTotal'>-</span></p>
+      </div>
+
+      <a class='back-home-btn' href='javascript:void(0)' onclick='showHome()'>العودة للرئيسية</a>
+    </div>
+
+  </div>
+<script src="script.js"></script>
+</body>
+</html>
