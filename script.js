@@ -146,7 +146,7 @@ var BLOG_URL = 'https://dz-tech2017.blogspot.com';
 
       var html = '';
       html += '<a href="#product-' + index + '" onclick="showProduct(' + index + ')">';
-      html += '<img class="product-card-image" src="' + image + '" alt=""/>';
+      html += '<img class="product-card-image" src="' + image + '" alt="" loading="lazy" decoding="async" width="600" height="600"/>';
       html += '</a>';
       html += '<div class="product-card-content">';
       html += '<div class="product-card-title">' + title + '</div>';
@@ -269,7 +269,7 @@ var BLOG_URL = 'https://dz-tech2017.blogspot.com';
     imgs.forEach(function (src, idx) {
       var slide = document.createElement('div');
       slide.className = 'slider-slide';
-      slide.innerHTML = '<img src="' + src + '" alt=""/>';
+      slide.innerHTML = '<img src="' + src + '" alt="" loading="' + (idx === 0 ? 'eager' : 'lazy') + '" fetchpriority="' + (idx === 0 ? 'high' : 'low') + '" decoding="async" width="800" height="800"/>';
       sliderWrapper.appendChild(slide);
 
       var dot = document.createElement('div');
@@ -294,7 +294,12 @@ var BLOG_URL = 'https://dz-tech2017.blogspot.com';
     document.getElementById('deliveryPrice').textContent = '0 دج';
 
     document.getElementById('miniProductTitle').textContent = product.title;
-    document.getElementById('miniProductImg').src = product.images.length ? product.images[0] : 'https://via.placeholder.com/100';
+    var miniImg = document.getElementById('miniProductImg');
+    miniImg.loading = 'lazy';
+    miniImg.decoding = 'async';
+    miniImg.width = 52;
+    miniImg.height = 52;
+    miniImg.src = product.images.length ? product.images[0] : 'https://via.placeholder.com/100';
 
     updateTotal();
 
@@ -335,10 +340,17 @@ var BLOG_URL = 'https://dz-tech2017.blogspot.com';
         fillCommunes(code);
       } else {
         fetch(COMMUNE_URL)
-          .then(function (res) { return res.json(); })
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
           .then(function (data) {
             communesData = data;
             fillCommunes(code);
+          })
+          .catch(function () {
+            commune.innerHTML = '<option value="">تعذر تحميل البلديات</option>';
+            commune.disabled = true;
           });
       }
     };
