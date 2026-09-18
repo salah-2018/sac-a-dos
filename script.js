@@ -1,5 +1,4 @@
-var BLOG_URL = 'https://dz-tech2017.blogspot.com';
-  var FEED_URL = BLOG_URL + '/feeds/posts/default?alt=json&max-results=50';
+var PRODUCTS_URL = './products.json';
   var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWarAGLl0uCB2heO41fvHJ7ZImSo2sEThJq2jDta8A8I9yzISzY6GFu0wck-ZQg4qNmA/exec';
 
   var GALLERY_IMAGES_COUNT = 2; 
@@ -433,62 +432,36 @@ var BLOG_URL = 'https://dz-tech2017.blogspot.com';
     });
   }
 
-  // تحميل المنتجات من Blogger.
-  // إذا منع المتصفح fetch بسبب CORS، نستخدم JSONP كحل احتياطي.
+  // تحميل المنتجات من Cloudflare، مع دعم المعاينة المحلية عبر file://
   function loadProducts() {
     var status = document.getElementById('status');
     status.textContent = 'جاري تحميل المنتجات...';
 
-    fetch(FEED_URL)
+    // عند فتح index.html مباشرة من الكمبيوتر، استخدم البيانات المضمنة إن وجدت
+    if (window.location.protocol === 'file:' && Array.isArray(window.LOCAL_PRODUCTS) && window.LOCAL_PRODUCTS.length) {
+      renderProducts(window.LOCAL_PRODUCTS);
+      return;
+    }
+
+    fetch(PRODUCTS_URL, { cache: 'default' })
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       })
-      .then(function (data) {
-        if (data.feed && data.feed.entry) {
-          renderProducts(data.feed.entry);
+      .then(function (entries) {
+        if (Array.isArray(entries) && entries.length) {
+          renderProducts(entries);
         } else {
-          throw new Error('Invalid Blogger feed');
+          throw new Error('Invalid products data');
         }
       })
-      .catch(function () {
-        loadProductsJSONP();
+      .catch(function (error) {
+        console.error('Products loading error:', error);
+        status.textContent = 'حدث خطأ أثناء تحميل المنتجات. تأكد من وجود products.json.';
       });
   }
 
-  function loadProductsJSONP() {
-    var status = document.getElementById('status');
-    var callbackName = 'bloggerProductsCallback_' + Date.now();
-    var scriptTag = document.createElement('script');
 
-    window[callbackName] = function (data) {
-      try {
-        if (data && data.feed && data.feed.entry) {
-          renderProducts(data.feed.entry);
-        } else {
-          status.textContent = 'لا توجد منتجات حالياً.';
-        }
-      } catch (e) {
-        status.textContent = 'حدث خطأ أثناء تحميل المنتجات.';
-      } finally {
-        delete window[callbackName];
-        if (scriptTag.parentNode) scriptTag.parentNode.removeChild(scriptTag);
-      }
-    };
 
-    scriptTag.src = BLOG_URL +
-      '/feeds/posts/default?alt=json-in-script&max-results=50&callback=' +
-      encodeURIComponent(callbackName);
-
-    scriptTag.onerror = function () {
-      status.textContent = 'تعذر الاتصال بمصدر المنتجات.';
-      delete window[callbackName];
-      if (scriptTag.parentNode) scriptTag.parentNode.removeChild(scriptTag);
-    };
-
-    document.head.appendChild(scriptTag);
-  }
-
-  window.addEventListener('load', function () {
-    loadProducts();
-  });
+// بدء تحميل المنتجات بعد تعريف جميع الدوال
+loadProducts();
