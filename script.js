@@ -1,5 +1,5 @@
 var PRODUCTS_URL = './products.json';
-  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzGHtxiDbY4RR3Ylr3m42zS1JwyhaZgn3Tzfocnk96CJKnIXhb59HwO-RfS2eH5faoZig/exec';
+  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQM4y2m_QvmKaUdJSv-WrT3ZkgMpyd0Czbk0k8ND2QrFTS8TO85OG6oAMpElTNCPwS1Q/exec';
 
   var GALLERY_IMAGES_COUNT = 2; 
 
